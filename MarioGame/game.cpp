@@ -1,6 +1,10 @@
 #include "game.h"
-#include "Resources.h"
-#include <filesystem>
+
+
+Map map(16.0f);
+Camera camera(320.0f);
+Mario mario;
+
 
 void Begin(const sf::Window& window)
 {
@@ -13,15 +17,23 @@ void Begin(const sf::Window& window)
 				file.path().string());			
 		}
 	}
+
+	sf::Image image;
+	image.loadFromFile("map.png");
+	mario.position = map.CreateFromImage(image);
+	
+	
 }
 
 void Update(float deltaTime)
 {
-
+	mario.Update(deltaTime);
+	camera.position = mario.position;
 }
 
 void Render(Renderer& renderer)
 {
-	renderer.Draw(Resources::textures["brick.png"], sf::Vector2f(), sf::Vector2f(2, 2));
+	mario.RenderMario(renderer);
+	map.Draw(renderer);
 }
 
