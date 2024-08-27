@@ -28,7 +28,7 @@ void MyDebugDraw::DrawSolidPolygon(const b2Vec2* vertices, int32 vertexCount, co
 		shape.setPoint(i, sf::Vector2f(vertices[i].x, vertices[i].y));
 	}
 
-	shape.setFillColor(sf::Color(color.r * 255, color.g * 255, color.b * 255, color.a * 255));
+	shape.setFillColor(sf::Color(color.r * 255, color.g * 255, color.b * 255, color.a * 120));
 	target.draw(shape);
 }
 
@@ -36,7 +36,7 @@ void MyDebugDraw::DrawCircle(const b2Vec2& center, float32 radius, const b2Color
 {
 	sf::CircleShape circle(radius);
 	circle.setPosition(center.x, center.y);
-	circle.setOrigin(radius / 2.0f, radius / 2.0f);
+	circle.setOrigin(radius, radius);
 	circle.setOutlineThickness(0.02f);
 	circle.setFillColor(sf::Color::Transparent);
 	circle.setOutlineColor(sf::Color(color.r * 255, color.g * 255, color.b * 255, color.a * 255));
@@ -47,8 +47,8 @@ void MyDebugDraw::DrawSolidCircle(const b2Vec2& center, float32 radius, const b2
 {
 	sf::CircleShape circle(radius);
 	circle.setPosition(center.x, center.y);
-	circle.setOrigin(radius / 2.0f, radius / 2.0f);;
-	circle.setOutlineColor(sf::Color(color.r * 255, color.g * 255, color.b * 255, color.a * 80));
+	circle.setOrigin(radius, radius);
+	circle.setOutlineColor(sf::Color(color.r * 255, color.g * 255, color.b * 255, color.a * 120));
 	target.draw(circle);
 
 	b2Vec2 p = center + (radius * axis);
@@ -82,7 +82,7 @@ void MyDebugDraw::DrawPoint(const b2Vec2& p, float32 size, const b2Color& color)
 {
 	sf::CircleShape circle(size);
 	circle.setPosition(p.x, p.y);
-	circle.setOrigin(size / 2.0f, size / 2.0f);
+	circle.setOrigin(size,size);
 	circle.setFillColor(sf::Color(color.r * 255, color.g * 255, color.b * 255, color.a * 255));
 	target.draw(circle);
 }

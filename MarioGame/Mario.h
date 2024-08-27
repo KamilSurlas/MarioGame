@@ -4,17 +4,23 @@
 #include "Resources.h"
 #include "Physics.h"
 #include <Box2D.h>
+#include "CollisionListenerHelper.h"
 #define _USE_MATH_DEFINES
 #include "math.h"
-class Mario
+class Mario : public CollisionListenerHelper
 {
 public:
 	void Begin();
 	void Update(float deltaTime);
 	void RenderMario(Renderer& renderer);
+
+	void OnBeginContact() override;
+	void OnEndContact() override;
+
 	sf::Vector2f position{};
 	float angle{};
 private:
 	b2Body* body;
+	bool isOnGround = false;	
 };
 

@@ -11,6 +11,8 @@ void Physics::Init()
 void Physics::Update(float deltaTime)
 {
 	world.Step(deltaTime, 6, 2);
+	static CollisionListener collisionListener;
+	world.SetContactListener(&collisionListener);
 }
 
 void Physics::DebugDraw(Renderer& renderer)
