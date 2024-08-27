@@ -1,8 +1,8 @@
 #include "game.h"
 
 
-Map map(16.0f);
-Camera camera(320.0f);
+Map map(1.0f);
+Camera camera(20.0f);
 Mario mario;
 
 
@@ -18,15 +18,18 @@ void Begin(const sf::Window& window)
 		}
 	}
 
+	Physics::Init();
+
 	sf::Image image;
 	image.loadFromFile("map.png");
 	mario.position = map.CreateFromImage(image);
-	
+	mario.Begin();
 	
 }
 
 void Update(float deltaTime)
 {
+	Physics::Update(deltaTime);
 	mario.Update(deltaTime);
 	camera.position = mario.position;
 }
@@ -35,5 +38,7 @@ void Render(Renderer& renderer)
 {
 	mario.RenderMario(renderer);
 	map.Draw(renderer);
+
+	Physics::DebugDraw(renderer);
 }
 

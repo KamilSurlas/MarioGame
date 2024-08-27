@@ -3,6 +3,9 @@
 #include <vector>
 #include "Renderer.h"
 #include "Resources.h"
+#include <Box2D.h>
+#include "Physics.h"
+
 class Map
 {
 public:

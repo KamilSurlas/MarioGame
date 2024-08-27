@@ -10,7 +10,7 @@ int main(void) {
     Renderer renderer(window);
 
 
-    
+    window.setFramerateLimit(60);
 
     Begin(window);
     while (window.isOpen()) 

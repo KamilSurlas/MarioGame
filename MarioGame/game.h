@@ -6,6 +6,7 @@
 #include <filesystem>
 #include "Camera.h"
 #include "Mario.h"
+#include "Physics.h"
 extern Camera camera;
 
 void Begin(const sf::Window& window);
