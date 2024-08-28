@@ -7,6 +7,7 @@
 #include "CollisionListenerHelper.h"
 #define _USE_MATH_DEFINES
 #include "math.h"
+#include "Animation.h"
 class Mario : public CollisionListenerHelper
 {
 public:
@@ -20,7 +21,10 @@ public:
 	sf::Vector2f position{};
 	float angle{};
 private:
+	sf::Texture textureToDraw;
+	Animation runAnimation;
 	b2Body* body;
-	bool isOnGround = false;	
+	size_t isOnGround = 0;	
+	bool facingLeft = false;
 };
 

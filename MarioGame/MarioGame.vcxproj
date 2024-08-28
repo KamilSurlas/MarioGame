@@ -159,6 +159,7 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClCompile Include="Animation.cpp" />
     <ClCompile Include="Camera.cpp" />
     <ClCompile Include="CollisionListener.cpp" />
     <ClCompile Include="CollisionListenerHelper.cpp" />
@@ -172,6 +173,7 @@
     <ClCompile Include="Resources.cpp" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="Animation.h" />
     <ClInclude Include="Camera.h" />
     <ClInclude Include="CollisionListener.h" />
     <ClInclude Include="CollisionListenerHelper.h" />
