@@ -161,13 +161,14 @@
   <ItemGroup>
     <ClCompile Include="Animation.cpp" />
     <ClCompile Include="Camera.cpp" />
+    <ClCompile Include="Coin.cpp" />
     <ClCompile Include="CollisionListener.cpp" />
-    <ClCompile Include="CollisionListenerHelper.cpp" />
     <ClCompile Include="game.cpp" />
     <ClCompile Include="Map.cpp" />
     <ClCompile Include="Mario.cpp" />
     <ClCompile Include="MarioGame.cpp" />
     <ClCompile Include="MyDebugDraw.cpp" />
+    <ClCompile Include="Object.cpp" />
     <ClCompile Include="Physics.cpp" />
     <ClCompile Include="Renderer.cpp" />
     <ClCompile Include="Resources.cpp" />
@@ -175,12 +176,14 @@
   <ItemGroup>
     <ClInclude Include="Animation.h" />
     <ClInclude Include="Camera.h" />
+    <ClInclude Include="Coin.h" />
     <ClInclude Include="CollisionListener.h" />
-    <ClInclude Include="CollisionListenerHelper.h" />
+    <ClInclude Include="FixtureData.h" />
     <ClInclude Include="game.h" />
     <ClInclude Include="Map.h" />
     <ClInclude Include="Mario.h" />
     <ClInclude Include="MyDebugDraw.h" />
+    <ClInclude Include="Object.h" />
     <ClInclude Include="Physics.h" />
     <ClInclude Include="Renderer.h" />
     <ClInclude Include="Resources.h" />

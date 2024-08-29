@@ -2,8 +2,13 @@
 #include <Box2D.h>
 #include "Renderer.h"
 #include "MyDebugDraw.h"
-#include "CollisionListener.h"
-
+#include "FixtureData.h"
+class CollisionListenerHelper
+{
+public:
+	virtual void OnBeginContact(b2Fixture* other) = 0;
+	virtual void OnEndContact(b2Fixture* other) = 0;
+};
 class Physics
 {
 public:

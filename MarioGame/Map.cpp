@@ -48,7 +48,7 @@ void Map::CreateBoard(size_t width, size_t height)
 	
 }
 
-sf::Vector2f Map::CreateFromImage(const sf::Image& image)
+sf::Vector2f Map::CreateFromImage(const sf::Image& image, std::vector<Object*>& objects)
 {
 	grid.clear();
 	grid = std::vector(image.getSize().x, std::vector(image.getSize().y, 0));
@@ -60,7 +60,7 @@ sf::Vector2f Map::CreateFromImage(const sf::Image& image)
 		for (size_t y = 0; y < grid[x].size(); y++)
 		{
 			sf::Color color = image.getPixel(x, y);
-			if (color == sf::Color::Black)
+			if (color == sf::Color::Black || color == sf::Color::Green)
 			{
 				grid[x][y] = 1;
 				b2BodyDef bodyDef{};
@@ -72,13 +72,27 @@ sf::Vector2f Map::CreateFromImage(const sf::Image& image)
 				b2PolygonShape shape{};
 
 				shape.SetAsBox(cellSize / 2.0f, cellSize / 2.0f);
-
-				body->CreateFixture(&shape, 0.0f);
+				FixtureData* fixtureData = new FixtureData();
+				fixtureData->type = FixtureDataType::MapTile;
+				fixtureData->mapX = x;
+				fixtureData->mapY = y;
+				b2FixtureDef fixtureDef{};
+				fixtureDef.shape = &shape;
+				fixtureDef.userData = fixtureData;
+				fixtureDef.density = 0.0f;			
+				body->CreateFixture(&fixtureDef);
 			}
 			else if (color == sf::Color::Red)
 			{
 				marioPosition = sf::Vector2f(cellSize * x + cellSize / 2.0f,
 					cellSize * y + cellSize / 2.0f);
+			}
+			else if (color == sf::Color::Yellow)
+			{
+				Object* coin = new Coin();
+				coin->position = sf::Vector2f(cellSize * x + cellSize / 2.0f,
+					cellSize * y + cellSize / 2.0f);
+				objects.push_back(coin);
 			}
 		}
 	}

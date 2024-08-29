@@ -1,4 +1,6 @@
 #include "Mario.h"
+#include <iostream>
+#include "game.h"
 
 const float movementSpeed = 7.0f;
 const float jumpVelocity = 4.0f;
@@ -11,6 +13,14 @@ void Mario::Begin()
 			AnimFrame(0.10f,Resources::textures["run1.png"])
 		});
 
+	jumpSound.setBuffer(Resources::sounds["jump.wav"]);
+	jumpSound.setVolume(70);
+
+	fixtureData.listener = this;
+	fixtureData.mario = this;
+	fixtureData.type = FixtureDataType::Mario;
+
+
 	b2BodyDef bodyDef{};
 	bodyDef.type = b2_dynamicBody;
 	bodyDef.position.Set(position.x, position.y);
@@ -18,6 +28,7 @@ void Mario::Begin()
 	body = Physics::world.CreateBody(&bodyDef);
 
 	b2FixtureDef fixtureDef{};
+	fixtureDef.userData = (void*)&fixtureData;
 	fixtureDef.density = 1.0f;
 	fixtureDef.friction = 0.0f;
 
@@ -36,8 +47,7 @@ void Mario::Begin()
 	polygonShape.SetAsBox(0.5f, 0.5f);
 	fixtureDef.shape = &polygonShape;
 	body->CreateFixture(&fixtureDef);
-	polygonShape.SetAsBox(0.4f,0.2f,b2Vec2(0.0f,1.0f),0.0f);
-	fixtureDef.userData = (void*)this;
+	polygonShape.SetAsBox(0.4f, 0.2f, b2Vec2(0.0f, 1.0f), 0.0f);
 	fixtureDef.isSensor = true;
 	body->CreateFixture(&fixtureDef);
 }
@@ -64,6 +74,7 @@ void Mario::Update(float deltaTime)
 	if (sf::Keyboard::isKeyPressed(sf::Keyboard::Up) && isOnGround)
 	{
 		velocity.y -= jumpVelocity;
+		jumpSound.play();
 	}
 	textureToDraw = runAnimation.GetTexture();
 	if (velocity.x < -0.02f)
@@ -95,15 +106,37 @@ void Mario::RenderMario(Renderer& renderer)
 		position, sf::Vector2f(facingLeft? -1.0f:1.0f,2.0f), angle);
 }
 
-void Mario::OnBeginContact()
+void Mario::OnBeginContact(b2Fixture* other)
 {
-	isOnGround++;
+	FixtureData* data = (FixtureData*)other->GetUserData();
+	if (!data)
+	{
+		return;
+	}
+	if (data->type == FixtureDataType::MapTile)
+	{
+		isOnGround++;
+	}
+	else if (data->type == FixtureDataType::Object && data->object->tag == "coin") {
+		DeleteObject(data->object);
+		std::cout << "coins = " << ++coins << "\n";
+	}
 }
 
-void Mario::OnEndContact()
+void Mario::OnEndContact(b2Fixture* other)
 {
-	if (isOnGround > 0)
+	FixtureData* data = (FixtureData*)other->GetUserData();
+
+	if (!data)
+	{
+		return;
+	}
+
+	if (data->type == FixtureDataType::MapTile && isOnGround > 0)
 	{
 		isOnGround--;
 	}
+	
+	
+	
 }

@@ -2,26 +2,26 @@
 
 void CollisionListener::BeginContact(b2Contact* contact)
 {
-	CollisionListenerHelper* listener = (CollisionListenerHelper*)contact->GetFixtureA()->GetUserData();
+	FixtureData* data = (FixtureData*)contact->GetFixtureA()->GetUserData();
 
-	if (listener)
-	listener->OnBeginContact();
+	if (data && data->listener)
+		data->listener->OnBeginContact(contact->GetFixtureB());
 
-	listener = (CollisionListenerHelper*)contact->GetFixtureB()->GetUserData();
+	data = (FixtureData*)contact->GetFixtureB()->GetUserData();
 
-	if(listener)
-	listener->OnBeginContact();
+	if (data && data->listener)
+		data->listener->OnBeginContact(contact->GetFixtureA());
 }
 
 void CollisionListener::EndContact(b2Contact* contact)
 {
-	CollisionListenerHelper* listener = (CollisionListenerHelper*)contact->GetFixtureA()->GetUserData();
+	FixtureData* data = (FixtureData*)contact->GetFixtureA()->GetUserData();
 
-	if (listener)
-	listener->OnEndContact();
+	if (data && data->listener)
+		data->listener->OnEndContact(contact->GetFixtureB());
 
-	listener = (CollisionListenerHelper*)contact->GetFixtureB()->GetUserData();
+	data = (FixtureData*)contact->GetFixtureB()->GetUserData();
 
-	if (listener)
-	listener->OnEndContact();
+	if (data && data->listener)
+		data->listener->OnEndContact(contact->GetFixtureA());
 }
