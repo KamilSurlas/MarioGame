@@ -49,7 +49,7 @@ void Mario::Begin()
 	body->CreateFixture(&fixtureDef);
 	polygonShape.SetAsBox(0.4f, 0.2f, b2Vec2(0.0f, 1.0f), 0.0f);
 	fixtureDef.isSensor = true;
-	body->CreateFixture(&fixtureDef);
+	groundDetection = body->CreateFixture(&fixtureDef);
 }
 void Mario::Update(float deltaTime)
 {
@@ -106,14 +106,14 @@ void Mario::RenderMario(Renderer& renderer)
 		position, sf::Vector2f(facingLeft? -1.0f:1.0f,2.0f), angle);
 }
 
-void Mario::OnBeginContact(b2Fixture* other)
+void Mario::OnBeginContact(b2Fixture* self, b2Fixture* other)
 {
 	FixtureData* data = (FixtureData*)other->GetUserData();
 	if (!data)
 	{
 		return;
 	}
-	if (data->type == FixtureDataType::MapTile)
+	if (groundDetection == self && data->type == FixtureDataType::MapTile)
 	{
 		isOnGround++;
 	}
@@ -123,7 +123,7 @@ void Mario::OnBeginContact(b2Fixture* other)
 	}
 }
 
-void Mario::OnEndContact(b2Fixture* other)
+void Mario::OnEndContact(b2Fixture* self, b2Fixture* other)
 {
 	FixtureData* data = (FixtureData*)other->GetUserData();
 
@@ -132,11 +132,13 @@ void Mario::OnEndContact(b2Fixture* other)
 		return;
 	}
 
-	if (data->type == FixtureDataType::MapTile && isOnGround > 0)
+	if (groundDetection == self && data->type == FixtureDataType::MapTile && isOnGround > 0)
 	{
 		isOnGround--;
 	}
-	
-	
-	
+}
+
+size_t Mario::GetMarioCoins()
+{
+	return coins;
 }

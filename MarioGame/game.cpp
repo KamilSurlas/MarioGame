@@ -6,7 +6,8 @@ Camera camera(20.0f);
 Mario mario;
 std::vector<Object*> objects{};
 sf::Music music;
-
+sf::Font font{};
+sf::Text coinsText("Coins", font);
 void Begin(const sf::Window& window)
 {
 	LoadResources();
@@ -56,6 +57,13 @@ void Render(Renderer& renderer)
 	Physics::DebugDraw(renderer);
 }
 
+void RenderUi(Renderer& renderer)
+{
+	coinsText.setPosition(-camera.GetViewSize() / 2.0f + sf::Vector2f(2.0f, 1.0f));
+	coinsText.setString("Coins: " + std::to_string(mario.GetMarioCoins()));
+	renderer.target.draw(coinsText);
+}
+
 void DeleteObject(Object* obj)
 {
 	const auto& it = std::find(objects.begin(), objects.end(), obj);
@@ -86,5 +94,11 @@ void LoadResources()
 				file.path().string());
 		}
 	}
+
+	font.loadFromFile("font.ttf");
+	coinsText.setFillColor(sf::Color::White);
+	coinsText.setOutlineColor(sf::Color::Black);
+	coinsText.setOutlineThickness(1.0f);
+	coinsText.setScale(0.1f, 0.1f);
 }
 

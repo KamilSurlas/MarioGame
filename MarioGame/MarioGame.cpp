@@ -30,6 +30,8 @@ int main(void) {
         window.clear();
 
         Render(renderer);
+        window.setView(camera.GetUiView());
+        RenderUi(renderer);
 
         window.display();
     }

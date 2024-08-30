@@ -17,12 +17,13 @@ public:
 	void Update(float deltaTime);
 	void RenderMario(Renderer& renderer);
 
-	void OnBeginContact(b2Fixture* other) override;
-	void OnEndContact(b2Fixture* other) override;
-
+	void OnBeginContact(b2Fixture* self,b2Fixture* other) override;
+	void OnEndContact(b2Fixture* self,b2Fixture* other) override;
+	size_t GetMarioCoins();
 	sf::Vector2f position{};
 	float angle{};
 private:
+	b2Fixture* groundDetection;
 	FixtureData fixtureData{};
 	sf::Sound jumpSound;
 	sf::Texture textureToDraw;

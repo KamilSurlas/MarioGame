@@ -6,8 +6,8 @@
 class CollisionListenerHelper
 {
 public:
-	virtual void OnBeginContact(b2Fixture* other) = 0;
-	virtual void OnEndContact(b2Fixture* other) = 0;
+	virtual void OnBeginContact(b2Fixture* self, b2Fixture* other) = 0;
+	virtual void OnEndContact(b2Fixture* self, b2Fixture* other) = 0;
 };
 class Physics
 {
