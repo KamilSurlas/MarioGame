@@ -1,6 +1,7 @@
 #include "Mario.h"
 #include <iostream>
 #include "game.h"
+#include "Enemy.h"
 
 const float movementSpeed = 7.0f;
 const float jumpVelocity = 4.0f;
@@ -25,7 +26,7 @@ void Mario::Begin()
 	bodyDef.type = b2_dynamicBody;
 	bodyDef.position.Set(position.x, position.y);
 	bodyDef.fixedRotation = true;
-	body = Physics::world.CreateBody(&bodyDef);
+	body = Physics::world->CreateBody(&bodyDef);
 
 	b2FixtureDef fixtureDef{};
 	fixtureDef.userData = (void*)&fixtureData;
@@ -120,6 +121,23 @@ void Mario::OnBeginContact(b2Fixture* self, b2Fixture* other)
 	else if (data->type == FixtureDataType::Object && data->object->tag == "coin") {
 		DeleteObject(data->object);
 		std::cout << "coins = " << ++coins << "\n";
+	}
+	else if (data->type == FixtureDataType::Object && data->object->tag == "enemy") 
+	{
+		Enemy* enemy = dynamic_cast<Enemy*>(data->object);
+		if (!enemy)
+		{
+			return;
+		}
+		if (groundDetection == self)
+		{	
+			enemy->Die();
+		}
+		else if (!enemy->GetIsDead())
+		{
+			isDead = true;
+			enemy->Die();
+		}
 	}
 }
 

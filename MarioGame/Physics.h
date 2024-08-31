@@ -12,10 +12,11 @@ public:
 class Physics
 {
 public:
+	~Physics();
 	static void Init();
 	static void Update(float deltaTime);
 	static void DebugDraw(Renderer& renderer);
-	static b2World world;
+	static b2World* world;
 	static MyDebugDraw* debugDraw;
 };
 

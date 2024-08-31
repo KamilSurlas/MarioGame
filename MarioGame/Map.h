@@ -8,7 +8,7 @@
 #include "Object.h"
 #include "Coin.h"
 #include "FixtureData.h"
-
+#include "Enemy.h"
 class Map
 {
 public:
@@ -16,7 +16,6 @@ public:
 	void Draw(Renderer& renderer);
 	void CreateBoard(size_t width, size_t height);
 	sf::Vector2f CreateFromImage(const sf::Image& image, std::vector<Object*>& objects);
-
 	std::vector < std::vector<sf::Texture*>> grid;
 	float cellSize;
 };

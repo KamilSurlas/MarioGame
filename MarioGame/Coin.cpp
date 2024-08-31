@@ -2,10 +2,6 @@
 #include "Physics.h"
 
 
-Coin::~Coin()
-{
-	Physics::world.DestroyBody(body);
-}
 
 void Coin::Begin()
 {
@@ -31,12 +27,12 @@ void Coin::Begin()
 	b2BodyDef bodyDef{};
 	bodyDef.position.Set(position.x,position.y);
 
-	b2Body* body = Physics::world.CreateBody(&bodyDef);
+	b2Body* body = Physics::world->CreateBody(&bodyDef);
 
 	b2PolygonShape shape{};
 
 	shape.SetAsBox(0.4f,0.4f);
-	FixtureData* fixtureData = new FixtureData();
+	fixtureData = new FixtureData();
 	fixtureData->type = FixtureDataType::Object;
 	fixtureData->object = this;
 	
@@ -56,4 +52,13 @@ void Coin::Update(float deltaTime)
 void Coin::Render(Renderer& renderer)
 {
 	renderer.Draw(animation.GetTexture(), position, sf::Vector2f(0.8f, 0.8f));
+}
+
+Coin::~Coin()
+{
+	if (fixtureData)
+	{
+		delete fixtureData;
+	}
+	Physics::world->DestroyBody(body);
 }

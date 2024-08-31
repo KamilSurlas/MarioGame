@@ -84,6 +84,11 @@ sf::Vector2f Map::CreateFromImage(const sf::Image& image, std::vector<Object*>& 
 				object = new Coin();
 				
 			}
+			else if (color == sf::Color::Blue)
+			{
+				object = new Enemy();
+
+			}
 			if (object)
 			{
 				object->position = sf::Vector2f(cellSize * x + cellSize / 2.0f,
@@ -96,7 +101,7 @@ sf::Vector2f Map::CreateFromImage(const sf::Image& image, std::vector<Object*>& 
 				bodyDef.position.Set(cellSize * x + cellSize / 2.0f,
 					cellSize * y + cellSize / 2.0f);
 
-				b2Body* body = Physics::world.CreateBody(&bodyDef);
+				b2Body* body = Physics::world->CreateBody(&bodyDef);
 
 				b2PolygonShape shape{};
 

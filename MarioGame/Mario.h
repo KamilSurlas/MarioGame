@@ -22,6 +22,7 @@ public:
 	size_t GetMarioCoins();
 	sf::Vector2f position{};
 	float angle{};
+	bool isDead = false;
 private:
 	b2Fixture* groundDetection;
 	FixtureData fixtureData{};
