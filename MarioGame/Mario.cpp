@@ -7,7 +7,7 @@ const float movementSpeed = 7.0f;
 const float jumpVelocity = 4.0f;
 void Mario::Begin()
 {
-	runAnimation = Animation(0.45f,
+	runAnimation = Animation(0.55f,
 		{
 			AnimFrame(0.30f,Resources::textures["run3.png"]),
 			AnimFrame(0.15f,Resources::textures["run2.png"]),
@@ -20,30 +20,22 @@ void Mario::Begin()
 	fixtureData.listener = this;
 	fixtureData.mario = this;
 	fixtureData.type = FixtureDataType::Mario;
-
-
 	b2BodyDef bodyDef{};
 	bodyDef.type = b2_dynamicBody;
 	bodyDef.position.Set(position.x, position.y);
 	bodyDef.fixedRotation = true;
 	body = Physics::world->CreateBody(&bodyDef);
-
 	b2FixtureDef fixtureDef{};
 	fixtureDef.userData = (void*)&fixtureData;
 	fixtureDef.density = 1.0f;
 	fixtureDef.friction = 0.0f;
-
 	b2CircleShape circleShape{};
 	circleShape.m_radius = 0.5f;
 	circleShape.m_p.Set(0.0f, -0.5f);
 	fixtureDef.shape = &circleShape;
 	body->CreateFixture(&fixtureDef);
-
-
-
 	circleShape.m_p.Set(0.0f, 0.5f);
 	body->CreateFixture(&fixtureDef);
-
 	b2PolygonShape polygonShape{};
 	polygonShape.SetAsBox(0.5f, 0.5f);
 	fixtureDef.shape = &polygonShape;

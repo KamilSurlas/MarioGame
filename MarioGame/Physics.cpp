@@ -8,6 +8,11 @@ Physics::~Physics()
 {
 	delete debugDraw;
 	debugDraw = nullptr;
+	if (world)
+	{
+		delete world;
+		world = nullptr;
+	}
 }
 
 void Physics::Init()
